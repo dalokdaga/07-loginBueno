@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { UsuarioModel } from './../../models/usuario.model';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class RegistroComponent implements OnInit {
 
   usuario: UsuarioModel;
-  constructor() { }
+  constructor( private auth: AuthService) { }
 
   ngOnInit() {
     this.usuario = new UsuarioModel();

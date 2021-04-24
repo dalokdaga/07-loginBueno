@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  usuario:UsuarioModel; 
+  usuario:UsuarioModel;
+
   constructor(private auth:AuthService,
               private router: Router) { }
 
@@ -28,11 +29,11 @@ export class LoginComponent implements OnInit {
         console.log(resp)
         this.router.navigateByUrl('/home');
       },(err) =>{
-        Swal.fire({                    
-          icon: 'error',
-          title: 'Error al autenticar',
-          text: err.error.error.message                
-        });
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Error al autenticar',
+        //   text: err.error.error.message
+        // });
       })
    }
 

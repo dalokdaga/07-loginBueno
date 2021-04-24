@@ -26,11 +26,11 @@ export class RegistroComponent implements OnInit {
         this.router.navigateByUrl('/home');
 
       },(err) =>{
-        Swal.fire({                    
-          icon: 'error',
-          title: 'Error al registrar',
-          text: err.error.error.message                
-        });
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Error al registrar',
+        //   text: err.error.error.message
+        // });
       });
   }
 

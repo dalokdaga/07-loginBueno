@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -12,6 +14,7 @@ import { Router } from '@angular/router';
 export class RegistroComponent implements OnInit {
 
   usuario: UsuarioModel;
+  recordarme = false; 
   constructor( private auth: AuthService,
                private router: Router) { }
 
@@ -21,9 +24,19 @@ export class RegistroComponent implements OnInit {
 
   onSubmit(form: NgForm){
     if( form.invalid){return;}
+    Swal.fire({                    
+      icon: 'info',      
+      text: 'Espere por favor...'
+    });
+    Swal.showLoading();
     this.auth.nuevoUsuario(this.usuario)
       .subscribe(resp => {
         this.router.navigateByUrl('/home');
+        Swal.close();
+
+        if (this.recordarme) {
+          localStorage.setItem('email',this.usuario.email);          
+        }
 
       },(err) =>{
         Swal.fire({                    

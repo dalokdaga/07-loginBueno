@@ -20,7 +20,7 @@ export class AuthService {
    }
 
   logout() {
-
+    localStorage.removeItem('token');
   }
 
   login(usuario: UsuarioModel){
@@ -34,7 +34,7 @@ export class AuthService {
     ).pipe(      
       map( resp =>{
         console.log('entro en el map del RXJS')
-        this.guardarToken(resp['idToken']);
+        this.guardarToken(resp['idToken'],parseInt(resp['expiresIn']));
         return resp;
       })
     );
@@ -51,15 +51,20 @@ export class AuthService {
     ).pipe(      
       map( resp =>{
         console.log('entro en el map del RXJS')
-        this.guardarToken(resp['idToken']);
+        this.guardarToken(resp['idToken'],parseInt(resp['expiresIn']));
         return resp;
       })
     );
   }
 
-  private guardarToken (idToken: string){
+  private guardarToken (idToken: string,expira: number){
     this.userToken = idToken;
     localStorage.setItem('token',idToken);
+
+    // calcula hora de expiración
+    let hoy = new Date();
+    hoy.setSeconds( expira );
+    localStorage.setItem('expira', hoy.getTime().toString())
   }
 
   leerToken() {
@@ -73,7 +78,18 @@ export class AuthService {
 
 
   estaAutenticado(): boolean{
-    return this.userToken.length>2;
+    if(this.userToken.length< 2){
+      return false;
+    }
+    const expira = Number(localStorage.getItem('expira'));
+    const expiraDate = new Date();
+    expiraDate.setTime(expira);
+
+    if (expiraDate > new Date()) {
+      return true;
+    }else{
+      return false;
+    }
   }
 
 

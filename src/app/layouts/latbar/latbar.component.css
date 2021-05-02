@@ -58,9 +58,9 @@
       padding: 20px;
       background: #343a40;
   }
-  #sidebar ul.components{
+  /* #sidebar ul.components{
       padding: 20px 0px;
-  }
+  } */
   
   #sidebar ul p{
       padding: 10px;
@@ -128,4 +128,53 @@
 .pull-right-container {
     position: absolute;
    
+}
+/* otro */
+
+.user-panel {
+  position: relative;
+}
+
+[class*='sidebar-dark'] .user-panel {
+  border-bottom: 1px solid #f7f8f8;
+}
+
+[class*='sidebar-light'] .user-panel {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.user-panel,
+.user-panel .info {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.user-panel .image {
+  display: inline-block;
+  padding-left: 0.8rem;
+}
+
+.user-panel img {
+  height: auto;
+  width: 2.1rem;
+}
+
+.user-panel .info {
+  display: inline-block;
+  padding: 5px 5px 5px 10px;
+}
+
+.user-panel .status,
+.user-panel .dropdown-menu {
+  font-size: 0.875rem;
+}
+
+.user-panel .image {
+  float: left;
+}
+.info{
+  display: inline-block;
+  margin-left: 0;
+  opacity: 1;
+  visibility: visible;
 }

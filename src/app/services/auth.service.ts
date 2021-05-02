@@ -9,6 +9,7 @@ import { catchError, map } from "rxjs/operators";
 export class AuthService {
   private url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
   private apikey = 'AIzaSyBR-5_yGOZNP3g6rGmfRn44m9MKQn-gqmQ';
+  private id: string = '';
   userToken: string;
   // Crear nuevo usuario
   //https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
@@ -21,6 +22,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('expira');
   }
 
   login(usuario: UsuarioModel){
@@ -32,9 +34,10 @@ export class AuthService {
     return this.http.post(
       `${ this.url }signInWithPassword?key=${this.apikey}`,authData
     ).pipe(      
-      map( resp =>{
-        console.log('entro en el map del RXJS')
+      map( resp =>{        
         this.guardarToken(resp['idToken'],parseInt(resp['expiresIn']));
+        // guardamos el id del usuario
+        this.id = resp['localId'];
         return resp;
       })
     );
@@ -92,5 +95,7 @@ export class AuthService {
     }
   }
 
-
+  getId(){
+    return this.id;
+  }
 }

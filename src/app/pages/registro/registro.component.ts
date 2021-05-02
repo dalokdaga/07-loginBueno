@@ -31,6 +31,7 @@ export class RegistroComponent implements OnInit {
     Swal.showLoading();
     this.auth.nuevoUsuario(this.usuario)
       .subscribe(resp => {
+        console.log(resp)
         this.router.navigateByUrl('/home');
         Swal.close();
 

@@ -9,6 +9,7 @@ import { catchError, map } from "rxjs/operators";
 export class AuthService {
   private url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
   private apikey = 'AIzaSyBR-5_yGOZNP3g6rGmfRn44m9MKQn-gqmQ';
+  private id: string = '';
   userToken: string;
   // Crear nuevo usuario
   //https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
@@ -20,7 +21,8 @@ export class AuthService {
    }
 
   logout() {
-
+    localStorage.removeItem('token');
+    localStorage.removeItem('expira');
   }
 
   login(usuario: UsuarioModel){
@@ -32,9 +34,10 @@ export class AuthService {
     return this.http.post(
       `${ this.url }signInWithPassword?key=${this.apikey}`,authData
     ).pipe(      
-      map( resp =>{
-        console.log('entro en el map del RXJS')
-        this.guardarToken(resp['idToken']);
+      map( resp =>{        
+        this.guardarToken(resp['idToken'],parseInt(resp['expiresIn']));
+        // guardamos el id del usuario
+        this.id = resp['localId'];
         return resp;
       })
     );
@@ -51,15 +54,20 @@ export class AuthService {
     ).pipe(      
       map( resp =>{
         console.log('entro en el map del RXJS')
-        this.guardarToken(resp['idToken']);
+        this.guardarToken(resp['idToken'],parseInt(resp['expiresIn']));
         return resp;
       })
     );
   }
 
-  private guardarToken (idToken: string){
+  private guardarToken (idToken: string,expira: number){
     this.userToken = idToken;
     localStorage.setItem('token',idToken);
+
+    // calcula hora de expiración
+    let hoy = new Date();
+    hoy.setSeconds( expira );
+    localStorage.setItem('expira', hoy.getTime().toString())
   }
 
   leerToken() {
@@ -69,5 +77,25 @@ export class AuthService {
       this.userToken = '';
     }
     return this.userToken;
+  }
+
+
+  estaAutenticado(): boolean{
+    if(this.userToken.length< 2){
+      return false;
+    }
+    const expira = Number(localStorage.getItem('expira'));
+    const expiraDate = new Date();
+    expiraDate.setTime(expira);
+
+    if (expiraDate > new Date()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  getId(){
+    return this.id;
   }
 }

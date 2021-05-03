@@ -12,10 +12,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~7.2.0",
+    "@angular/cdk": "~7.3.7",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
     "@angular/core": "~7.2.0",
     "@angular/forms": "~7.2.0",
+    "@angular/material": "^7.3.7",
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
@@ -24,7 +26,7 @@
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.3.3",
-    "sweetalert2": "^10.16.6",
+    "sweetalert2": "^9.11.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
   },

@@ -9,14 +9,14 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private auth: AuthService,
+  constructor(private authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
   }
   public salir(){
     console.log("lo cerro")
-    this.auth.logout();
+    this.authService.logout();
     this.router.navigateByUrl('/login');    
     console.log("termino")
   }

@@ -11,6 +11,7 @@ export class AuthService {
   private apikey = 'AIzaSyBR-5_yGOZNP3g6rGmfRn44m9MKQn-gqmQ';
   private id: string = '';
   userToken: string;
+  private loading: boolean = false;
   // Crear nuevo usuario
   //https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
 
@@ -19,6 +20,14 @@ export class AuthService {
   constructor(private http: HttpClient) {
     this.leerToken()
    }
+
+  getLoading(){
+    return this.loading;
+  }
+
+  pushLoading(){
+    this.loading = !this.loading;
+  }
 
   logout() {
     localStorage.removeItem('token');
